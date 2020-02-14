@@ -3,6 +3,7 @@ jobs:
   build:
     working_directory: ~/code
     docker:
+      - image: 'circleci/openjdk:11-jdk'
       - image: circleci/android:api-29
     environment:
       JVM_OPTS: -Xmx3200m
@@ -18,6 +19,9 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       - run:
+          name: Analyze on SonarCloud
+          command: gradle build sonarqube"
+      - run:
           name: Run Tests
           command: ./gradlew lint test
       - store_artifacts:
@@ -25,3 +29,8 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
+  workflows:
+  main:
+    jobs:
+      - build:
+          context: SonarCloud

@@ -25,3 +25,17 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
+version_tag: 2.1
+  extends: build
+  image: 'circleci/openjdk:11-jdk'
+  steps:
+      - checkout
+      - run:
+          name: Analyze on SonarCloud
+          command: gradle build sonarqube"
+
+workflows:
+  main:
+    jobs:
+      - build:
+          context: SonarCloud

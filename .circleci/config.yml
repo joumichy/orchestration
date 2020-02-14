@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  sonarqube: clicklogiq/sonarqube@0.0.1
 jobs:
   build:
     working_directory: ~/code

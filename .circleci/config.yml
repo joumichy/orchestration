@@ -25,17 +25,21 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
-version_tag: 2.1
-  extends: build
-  image: 'circleci/openjdk:11-jdk'
-  steps:
-      - checkout
-      - run:
-          name: Analyze on SonarCloud
-          command: gradle build sonarqube"
+description: Setup requirments
+steps:
+  - run: |
+      apk update
+      apk add --no-cache zip openjdk11-jre-headless
+      description: Install Sonarqube scanner
+parameters:
+  engine_version:
+    type: string
+    default: 4.2.0.1873
+steps:
+  - run:
+      command: >
+        wget
+        https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-<<
+        parameters.engine_version >>.zip
 
-workflows:
-  main:
-    jobs:
-      - build:
-          context: SonarCloud
+        unzip sonar-scanner-cli-<< parameters.engine_version >>.zip

@@ -25,18 +25,15 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
-description: Setup requirments
-steps:
-  - run: |
-      apk update
-      apk add --no-cache zip openjdk11-jre-headless
-      description: Install Sonarqube scanner
-parameters:
-  engine_version:
-    type: string
-    default: 4.2.0.1873
-steps:
-  - run:
+      - run: |
+          apk update
+          apk add --no-cache zip openjdk11-jre-headless
+          description: Install Sonarqube scanner
+    parameters:
+      engine_version:
+        type: string
+        default: 4.2.0.1873
+      - run:
       command: >
         wget
         https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-<<

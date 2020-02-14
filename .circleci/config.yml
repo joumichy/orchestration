@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run:
           name: Analyze on SonarCloud
-          command: gradle build sonarqube
+          command: sudo chmod +x gradlew | gradle build sonarqube
 workflows:
   main:
     jobs:
